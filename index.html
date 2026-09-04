@@ -482,9 +482,122 @@ footer{
   .reveal,.hero-content *{opacity:1!important;transform:none!important;animation:none!important}
   .hero-grid{animation:none}
 }
+
+/* === VGT PHOTO HERO + PREMIUM MOTION === */
+.hero-photo{
+  position:absolute;inset:0;z-index:1;overflow:hidden;
+  pointer-events:none;
+}
+.hero-photo-slide{
+  position:absolute;inset:0;opacity:0;
+  background-size:cover;background-position:center;
+  transform:scale(1.06);
+  transition:opacity 1.1s ease,transform 7s var(--ease);
+}
+.hero-photo-slide.active{opacity:.34;transform:scale(1)}
+.hero-photo::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 78%,transparent) 38%,color-mix(in srgb,var(--bg) 42%,transparent) 72%,var(--bg) 100%),
+    linear-gradient(0deg,var(--bg) 0%,transparent 42%,color-mix(in srgb,var(--bg) 35%,transparent) 100%);
+}
+.hero-content{z-index:3}
+.hero-photo-dots{
+  position:absolute;right:5%;bottom:13%;z-index:4;
+  display:flex;gap:7px;pointer-events:auto;
+}
+.hero-photo-dots button{
+  width:34px;height:3px;border:0;border-radius:10px;
+  background:color-mix(in srgb,var(--ink) 28%,transparent);
+  cursor:pointer;transition:width .35s,background .35s;
+}
+.hero-photo-dots button.active{width:54px;background:var(--green)}
+.hero-kicker{
+  display:inline-flex;gap:8px;align-items:center;
+  margin-top:24px;color:var(--mute);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.hero-kicker strong{color:var(--green)}
+/* animated road-light streaks */
+.road-lights{position:absolute;left:0;right:0;bottom:8%;height:90px;z-index:2;overflow:hidden;opacity:.5}
+.road-lights i{
+  position:absolute;width:110px;height:2px;background:var(--green);
+  filter:blur(.3px);opacity:0;animation:roadlight 4.5s linear infinite;
+}
+.road-lights i:nth-child(1){top:18%;animation-delay:0s}
+.road-lights i:nth-child(2){top:44%;animation-delay:1.4s;width:70px}
+.road-lights i:nth-child(3){top:70%;animation-delay:2.6s;width:150px}
+@keyframes roadlight{
+  0%{left:-15%;opacity:0;transform:scaleX(.4)}
+  12%{opacity:.8}
+  70%{opacity:.45}
+  100%{left:115%;opacity:0;transform:scaleX(1.2)}
+}
+/* fleet carousel */
+.fleet-showcase{position:relative;margin-top:18px}
+.fleet-carousel{
+  display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;padding:4px 2px 20px;
+  cursor:grab;
+}
+.fleet-carousel:active{cursor:grabbing}
+.fleet-carousel::-webkit-scrollbar{display:none}
+.fleet-card{
+  flex:0 0 min(78vw,560px);height:390px;position:relative;
+  overflow:hidden;border:1px solid var(--line);border-radius:22px;
+  scroll-snap-align:center;background:var(--card);
+  box-shadow:0 18px 45px var(--shade);
+}
+.fleet-card img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 1s var(--ease),filter .6s;
+}
+.fleet-card:hover img{transform:scale(1.055);filter:saturate(1.08)}
+.fleet-card::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(0,0,0,.78),transparent 55%);
+}
+.fleet-meta{position:absolute;left:24px;right:24px;bottom:20px;z-index:2;color:#fff}
+.fleet-meta small{color:var(--green);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.fleet-meta h3{font-size:24px;margin-top:4px;letter-spacing:-.03em}
+.fleet-meta p{font-size:13px;color:rgba(255,255,255,.72);margin-top:4px}
+.carousel-controls{display:flex;justify-content:flex-end;gap:8px;margin-top:-4px}
+.carousel-controls button{
+  width:44px;height:44px;border:1px solid var(--line);border-radius:50%;
+  background:var(--card);cursor:pointer;transition:.25s;color:var(--ink);
+}
+.carousel-controls button:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+/* magnetic-ish cards */
+.why-card,.stat{will-change:transform}
+.why-card::after{
+  content:"";position:absolute;inset:auto -30% -55% 20%;height:100px;
+  background:var(--glow);filter:blur(45px);opacity:0;transition:opacity .45s;
+}
+.why-card:hover::after{opacity:1}
+/* scroll progress */
+.progress{position:fixed;top:0;left:0;width:100%;height:2px;z-index:100;
+  transform-origin:left;transform:scaleX(0);background:var(--green)}
+@media(max-width:799px){
+  .hero{padding-top:92px}
+  .hero-photo-slide.active{opacity:.27}
+  .hero-photo::after{
+    background:linear-gradient(0deg,var(--bg) 3%,color-mix(in srgb,var(--bg) 65%,transparent) 52%,color-mix(in srgb,var(--bg) 35%,transparent) 100%);
+  }
+  .hero-photo-dots{left:20px;right:auto;bottom:9%;z-index:4}
+  .fleet-card{flex-basis:86vw;height:300px}
+  .fleet-meta{left:17px;right:17px;bottom:15px}
+  .fleet-meta h3{font-size:20px}
+  .carousel-controls{justify-content:space-between;margin-top:2px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-photo-slide{transition:none;transform:none}
+  .road-lights{display:none}
+}
+
 </style>
 </head>
 <body>
+<div class="progress" id="progress"></div>
 <!-- LOADER -->
 <div class="loader" id="loader">
   <div class="loader-inner">
@@ -527,6 +640,17 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-photo" id="heroPhotos" aria-hidden="true">
+    <div class="hero-photo-slide active" style="background-image:url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1800&q=88')"></div>
+    <div class="hero-photo-slide" style="background-image:url('https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1800&q=88')"></div>
+    <div class="hero-photo-slide" style="background-image:url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1800&q=88')"></div>
+  </div>
+  <div class="hero-photo-dots" id="heroDots" aria-label="Truck photos">
+    <button class="active" aria-label="Truck photo 1"></button>
+    <button aria-label="Truck photo 2"></button>
+    <button aria-label="Truck photo 3"></button>
+  </div>
+  <div class="road-lights" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-lines" aria-hidden="true">
@@ -546,6 +670,7 @@ footer{
       <a class="btn btn-p" href="#apply">Apply now</a>
       <a class="btn btn-g" href="tel:6186554444">Call recruiting</a>
     </div>
+    <div class="hero-kicker"><strong>VGT</strong> · Dry van · 48 states · CDL-A</div>
   </div>
 </section>
 
@@ -610,14 +735,41 @@ footer{
   </div>
 </section>
 
-<!-- FLEET / COMPANY -->
-<section class="s" id="fleet" style="padding-top:40px">
+<!-- FLEET / PHOTO STORY -->
+<section class="s" id="fleet" style="padding-top:50px">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div class="sec-label">The company</div>
-      <h2>Already running.</h2>
+      <div class="sec-label">The fleet</div>
+      <h2>Don’t just read about the truck.<br>See it.</h2>
+      <p class="lead">Real road-focused visuals, a late-model feel, and equipment that makes drivers want the seat.</p>
     </div>
-    <div class="facts-grid reveal">
+
+    <div class="fleet-showcase reveal">
+      <div class="fleet-carousel" id="fleetCarousel">
+        <article class="fleet-card">
+          <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1200&q=88" alt="Truck driving on highway" loading="lazy">
+          <div class="fleet-meta"><small>01 · Long haul</small><h3>Made for the open road.</h3><p>Confident miles. Clean presentation. Driver-first focus.</p></div>
+        </article>
+        <article class="fleet-card">
+          <img src="https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1200&q=88" alt="Truck on the road" loading="lazy">
+          <div class="fleet-meta"><small>02 · Highway</small><h3>Keep moving.</h3><p>Dry van freight across 48 states.</p></div>
+        </article>
+        <article class="fleet-card">
+          <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1200&q=88" alt="Semi truck at sunset" loading="lazy">
+          <div class="fleet-meta"><small>03 · Driver life</small><h3>Your next chapter starts here.</h3><p>A company built around getting drivers moving.</p></div>
+        </article>
+        <article class="fleet-card">
+          <img src="https://images.unsplash.com/photo-1586191552066-f52fdad4a0eb?auto=format&fit=crop&w=1200&q=88" alt="Truck cabin interior" loading="lazy">
+          <div class="fleet-meta"><small>04 · Comfort</small><h3>Make the cab feel like yours.</h3><p>Space, focus and a better everyday drive.</p></div>
+        </article>
+      </div>
+      <div class="carousel-controls">
+        <button type="button" id="fleetPrev" aria-label="Previous truck photo">←</button>
+        <button type="button" id="fleetNext" aria-label="Next truck photo">→</button>
+      </div>
+    </div>
+
+    <div class="facts-grid reveal" style="margin-top:52px">
       <div class="fact-row"><span>Company</span><b>VGT Transportation Inc.</b></div>
       <div class="fact-row"><span>Authority</span><b>MC-945435 · USDOT 2633507</b></div>
       <div class="fact-row"><span>Freight</span><b>Dry van · full truckload</b></div>
@@ -791,6 +943,44 @@ document.getElementById('form').onsubmit = ev => {
   setTimeout(() => toast.classList.remove('show'), 2800);
   ev.target.reset();
 };
+
+// Hero photo carousel — auto advances, dots are tappable.
+const heroSlides = [...document.querySelectorAll('.hero-photo-slide')];
+const heroDots = [...document.querySelectorAll('#heroDots button')];
+let heroIndex = 0, heroTimer;
+function showHero(i){
+  heroIndex = (i + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((x,n)=>x.classList.toggle('active',n===heroIndex));
+  heroDots.forEach((x,n)=>x.classList.toggle('active',n===heroIndex));
+}
+function restartHero(){
+  clearInterval(heroTimer);
+  heroTimer=setInterval(()=>showHero(heroIndex+1),5200);
+}
+heroDots.forEach((b,i)=>b.addEventListener('click',()=>{showHero(i);restartHero()}));
+restartHero();
+
+// Fleet carousel controls + autoplay.
+const fleet = document.getElementById('fleetCarousel');
+const cards = [...fleet.querySelectorAll('.fleet-card')];
+function fleetStep(dir){
+  const card = cards[0];
+  const gap = parseFloat(getComputedStyle(fleet).gap) || 14;
+  fleet.scrollBy({left:dir*(card.offsetWidth+gap),behavior:'smooth'});
+}
+document.getElementById('fleetPrev').onclick=()=>fleetStep(-1);
+document.getElementById('fleetNext').onclick=()=>fleetStep(1);
+let fleetTimer=setInterval(()=>fleetStep(1),6200);
+fleet.addEventListener('pointerdown',()=>clearInterval(fleetTimer));
+fleet.addEventListener('pointerup',()=>fleetTimer=setInterval(()=>fleetStep(1),6200));
+
+// Scroll progress indicator.
+const progress=document.getElementById('progress');
+addEventListener('scroll',()=>{
+  const max=document.documentElement.scrollHeight-innerHeight;
+  progress.style.transform=`scaleX(${max>0?scrollY/max:0})`;
+},{passive:true});
+
 </script>
 </body>
 </html>
