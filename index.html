@@ -15,6 +15,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0c0e0d">
 <title>VGT Transportation — Drive Further</title>
+
+<!-- ===== Favicon & PWA icons ===== -->
+<!-- Браузерная вкладка (favicon) -->
+<link rel="icon" type="image/png" href="transparent.PNG">
+<!-- Safari "Add to Home Screen" (Apple Touch Icon) -->
+<link rel="apple-touch-icon" href="transparent.PNG">
+<!-- Android / Chrome PWA manifest -->
+<link rel="manifest" href="manifest.json">
+<!-- Safari web-app capable (чтобы открывалась как standalone без адресной строки) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VGT Trans">
+<!-- ================================ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -296,7 +309,7 @@ header.scrolled{background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop
 .menu{
   display:none;background:var(--card);border-top:1px solid var(--line);padding:6px 0 18px
 }
-.menu.open{display:block}.menu a{display:block;padding:14px 0;font-size:17px;font-weight:750;border-bottom:1px solid var(--line)}
+.menu.open{display:block}.menu a{display:block;padding:14px 0;font-size:17px;font-weight:750;border-bottom:1px solid var(--line);color:var(--ink)}
 .menu a:last-child{border-bottom:0}
 
 .hero{
@@ -489,7 +502,7 @@ footer{padding:32px 0 calc(110px + var(--safe));border-top:1px solid var(--line)
 <header id="header">
   <div class="wrap navbar">
     <a class="brand" href="#">
-      <span class="brand-mark">VGT</span>
+      <span class="brand-mark"><img src="transparent.PNG" alt="VGT Logo" style="width:28px;height:28px;object-fit:contain;display:block"></span>
       <span>VGT Transportation</span>
     </a>
     <nav class="navlinks">
@@ -654,7 +667,7 @@ footer{padding:32px 0 calc(110px + var(--safe));border-top:1px solid var(--line)
 
 <footer>
   <div class="wrap footer-grid">
-    <div class="footer-brand"><span class="brand-mark">VGT</span><span>VGT Transportation Inc.</span></div>
+    <div class="footer-brand"><span class="brand-mark"><img src="transparent.PNG" alt="VGT Logo" style="width:24px;height:24px;object-fit:contain;display:block"></span><span>VGT Transportation Inc.</span></div>
     <div>MC-945435 • USDOT 2633507 • West Des Moines, IA • © 2026</div>
   </div>
 </footer>
