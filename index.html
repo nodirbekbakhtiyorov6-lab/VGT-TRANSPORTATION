@@ -155,16 +155,6 @@
             </div>
         </section>
 
-        <!-- ===== MARQUEE SECTION ===== -->
-        <section class="marquee-section">
-            <div class="marquee">
-                <div class="marquee-track">
-                    <span>OTR &nbsp;•&nbsp; REGIONAL &nbsp;•&nbsp; LOCAL &nbsp;•&nbsp; DEDICATED &nbsp;•&nbsp; FLATBED &nbsp;•&nbsp; REEFER &nbsp;•&nbsp; DRY VAN &nbsp;•&nbsp; INTERMODAL &nbsp;•&nbsp;</span>
-                    <span>OTR &nbsp;•&nbsp; REGIONAL &nbsp;•&nbsp; LOCAL &nbsp;•&nbsp; DEDICATED &nbsp;•&nbsp; FLATBED &nbsp;•&nbsp; REEFER &nbsp;•&nbsp; DRY VAN &nbsp;•&nbsp; INTERMODAL &nbsp;•&nbsp;</span>
-                </div>
-            </div>
-        </section>
-
         <!-- ===== ABOUT SECTION ===== -->
         <section class="about" id="about">
             <div class="section-container">
@@ -1199,47 +1189,6 @@
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        /* ===== MARQUEE ===== */
-        .marquee-section {
-            background: var(--green-deep);
-            padding: 1.2rem 0;
-            overflow: hidden;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .marquee {
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .marquee-track {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-
-        .marquee-track:hover {
-            animation-play-state: paused;
-        }
-
-        .marquee-track span {
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-light);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .marquee-track span:hover {
-            color: var(--green-pale);
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
         }
 
         /* ===== SECTION COMMON ===== */
