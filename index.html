@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0d1f1a">
     <title>VGT Transportation | Drive Your Future</title>
 
@@ -13,6 +13,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+
+    <!-- ========== DISABLE BROWSER ZOOM (DESKTOP) ========== -->
+    <script>
+        // Block Ctrl/Cmd + mouse wheel zoom
+        window.addEventListener('wheel', function (e) {
+            if (e.ctrlKey || e.metaKey) e.preventDefault();
+        }, { passive: false });
+
+        // Block Ctrl/Cmd + '+' / '-' / '0' keyboard zoom
+        window.addEventListener('keydown', function (e) {
+            if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '_', '0'].includes(e.key)) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Block trackpad pinch-zoom gesture (Safari)
+        window.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+        window.addEventListener('gesturechange', function (e) { e.preventDefault(); });
+        window.addEventListener('gestureend', function (e) { e.preventDefault(); });
+    </script>
 
     <!-- ========== CURSOR FOLLOWER ========== -->
     <div class="cursor-follower" id="cursorFollower"></div>
@@ -62,8 +82,8 @@
         <!-- ===== NAVIGATION ===== -->
         <nav class="navbar" id="navbar">
             <div class="nav-container">
-                <a href="#hero" class="nav-logo">
-                    <i class="fas fa-truck"></i>
+                <a href="transparent.PNG" class="nav-logo">
+                    <img src="logo.png" alt="VGT Transportation" class="nav-logo-img">
                     <span>VGT</span>
                     <small>TRANSPORTATION</small>
                 </a>
@@ -649,6 +669,7 @@
         html {
             scroll-behavior: smooth;
             font-size: 16px;
+            touch-action: manipulation;
         }
 
         body {
@@ -659,6 +680,7 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             cursor: none;
+            touch-action: manipulation;
         }
 
         @media (max-width: 768px) {
@@ -817,16 +839,10 @@
             transform: scale(1.05);
         }
 
-        .nav-logo i {
-            font-size: 1.8rem;
-            color: var(--green-pale);
-            animation: truckWiggle 3s ease-in-out infinite;
-        }
-
-        @keyframes truckWiggle {
-            0%, 100% { transform: rotate(0); }
-            25% { transform: rotate(3deg); }
-            75% { transform: rotate(-3deg); }
+        .nav-logo-img {
+            height: 2.1rem;
+            width: auto;
+            display: block;
         }
 
         .nav-logo span {
